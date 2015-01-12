@@ -16,8 +16,8 @@ Depends:
 License: MIT + file LICENSE
 LazyData: true
 Suggests:
+    gridSVG,
+    htmltools,
     knitr,
     SVGAnnotation,
-    gridSVG,
-    htmltools
 VignetteBuilder: knitr

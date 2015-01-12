@@ -12,15 +12,18 @@ svgPanZoom <- function(svg, ... , width = NULL, height = NULL) {
   if(inherits(svg,c("trellis","ggplot"))){
     # if class is trellis then plot then use grid.export
     # try to use gridSVG if available
-    if(require("gridSVG")) {
+    if (requireNamespace("gridSVG", quietly = TRUE)) {
       show(svg)
       svg = grid.export(name=NULL)$svg
     } else {  #use SVGAnnotation
-      if(require(SVGAnnotation)){
+      if(requireNamespace("SVGAnnotation", quietly = TRUE)){
         warning("for best results with ggplot2 and lattice, please install gridSVG")
         svg = svgPlot(svg, addInfo = F)
       } else { # if
-        stop("SVGAnnotation or gridSVG required with lattice or trellis objects")
+        stop(
+          "SVGAnnotation or gridSVG required with lattice or trellis objects",
+           call. = FALSE
+        )
       }
     }
   }

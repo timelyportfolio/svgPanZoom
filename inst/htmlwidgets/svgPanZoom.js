@@ -20,6 +20,21 @@ HTMLWidgets.widget({
 
     var svg = el.getElementsByTagName("svg")[0]
 
+    // use this to sort of make our diagram responsive
+    //  or at a minimum fit within the bounds set by htmlwidgets
+    //  for the parent container
+    function makeResponsive(el){
+       var svg = el.getElementsByTagName("svg")[0];
+       if(svg){
+        if(svg.width) {svg.removeAttribute("width")};
+        if(svg.height) {svg.removeAttribute("height")};
+        svg.style.width = "100%";
+        svg.style.height = "100%";
+       }
+    };
+
+    makeResponsive(el);
+
     instance.zoomWidget = svgPanZoom(svg, x.config);
     //  use expando property so we can access later
     //    somewhere saw where expando can cause memory leak in IE
