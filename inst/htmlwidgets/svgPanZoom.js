@@ -14,7 +14,11 @@ HTMLWidgets.widget({
 
   renderValue: function(el, x, instance) {
 
-    el.innerText = x.message;
+    el.innerHTML = x.svg;
+
+    var svg = el.getElementsByTagName("svg")[0]
+
+    instance = svgPanZoom(svg);
 
   },
 

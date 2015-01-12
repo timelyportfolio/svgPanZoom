@@ -1,15 +1,22 @@
-#' <Add Title>
+#' Pan and Zoom R graphics
 #'
-#' <Add Description>
+#' Add panning and zooming to almost any R graphics and
+#' hopefully and eventually other htmlwidgets.
 #'
 #' @import htmlwidgets
 #'
 #' @export
-svgPanZoom <- function(message, width = NULL, height = NULL) {
+svgPanZoom <- function(svg, width = NULL, height = NULL) {
+
+  # check to see if svg is XML and saveXML if so
+  if(inherits(s,"XMLAbstractDocument")){
+    # should we add check for svg element?
+    svg = XML::saveXML(s)
+  }
 
   # forward options using x
   x = list(
-    message = message
+    svg = svg
   )
 
   # create widget
