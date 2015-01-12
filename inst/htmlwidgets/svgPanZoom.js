@@ -24,7 +24,7 @@ HTMLWidgets.widget({
     //  use expando property so we can access later
     //    somewhere saw where expando can cause memory leak in IE
     //    could also set in HTMLWidgets.widgets[x] where matches el
-    el.zoomWidget = instance.zoomWidgets;
+    el.zoomWidget = instance.zoomWidget;
 
   },
 
