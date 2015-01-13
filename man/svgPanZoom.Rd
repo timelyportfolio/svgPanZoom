@@ -5,8 +5,38 @@
 \usage{
 svgPanZoom(svg, ..., width = NULL, height = NULL)
 }
+\arguments{
+\item{svg}{one of
+\itemize{
+  \item svg - SVG as XML, such as return from \code{\link[SVGAnnotation]{svgPlot}}
+  \item lattice plot - trellis object, such as \code{l} in \code{l=xyplot(...)}
+  \item ggplot2 plot - ggplot object, such as \code{g} in \code{g=ggplot(...) + geom_line()}
+  \item filename or connection of a SVG file
+}}
+
+\item{...}{other configuration options for svg-pan-zoom.js.
+See \href{How to Use}{https://github.com/ariutta/svg-pan-zoom#how-to-use}.
+These should be entered like \code{svgPanZoom( svg, controlIconsEnabled = F )}.}
+}
 \description{
 Add panning and zooming to almost any R graphics and
 hopefully and eventually other htmlwidgets.
+}
+\examples{
+library(svgPanZoom)
+
+# first let's demonstrate a base plot
+# use svgPlot for now
+library(SVGAnnotation)
+svgPanZoom( svgPlot( plot(1:10) ) )
+
+# the package gridSVG is highly recommended for lattice and ggplot2
+# second let's demonstrate a lattice plot
+library(lattice)
+svgPanZoom( xyplot( y~x, data.frame(x=1:10,y=1:10) ) )
+
+# third with a ggplot2 plot
+library(ggplot2)
+svgPanZoom( ggplot( data.frame(x=1:10,y=1:10), aes(x=x,y=y) ) + geom_line() )
 }
 
