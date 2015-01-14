@@ -37,7 +37,7 @@
 svgPanZoom <- function(svg, ... , width = NULL, height = NULL) {
 
   # check to see if trellis for lattice or ggplot
-  if(inherits(svg,c("trellis","ggplot"))){
+  if(inherits(svg,c("trellis","ggplot","ggmultiplot"))){
     # if class is trellis then plot then use grid.export
     # try to use gridSVG if available
     if (requireNamespace("gridSVG", quietly = TRUE)) {
