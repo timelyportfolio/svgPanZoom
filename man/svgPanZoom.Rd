@@ -30,6 +30,8 @@ library(svgPanZoom)
 library(SVGAnnotation)
 svgPanZoom( svgPlot( plot(1:10) ) )
 
+svgPanZoom( svgPlot(show( xyplot( y~x, data.frame(x=1:10,y=1:10) ) ) )
+
 # the package gridSVG is highly recommended for lattice and ggplot2
 # second let's demonstrate a lattice plot
 library(lattice)

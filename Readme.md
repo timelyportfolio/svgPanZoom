@@ -116,3 +116,48 @@ svgPanZoom(
   autoplot(survfit(Surv(time, status) ~ sex, data = lung))
 )
 ```
+
+If ternary diagrams excite you, let's do this [USDA soil example](http://www.ggtern.com/2014/01/15/usda-textural-soil-classification/) from [`ggtern`](http://www.ggtern.com).
+
+```
+install.packages("ggtern")
+library(ggtern)
+
+# Load the required libraries
+library(ggtern)
+library(plyr)
+library(grid)
+ 
+# Load the Data. (Available in ggtern 1.0.3.0 next version)
+data(USDA)
+ 
+# Put tile labels at the midpoint of each tile.
+USDA.LAB = ddply(USDA, 'Label', function(df) {
+    apply(df[, 1:3], 2, mean)
+})
+ 
+# Tweak
+USDA.LAB$Angle = 0
+USDA.LAB$Angle[which(USDA.LAB$Label == 'Loamy Sand')] = -35
+
+# Construct the plot.
+gTern <- ggplot(data = USDA, aes(y=Clay, x=Sand, z=Silt,
+                        color = Label,
+                        fill = Label)) +
+  coord_tern(L="x",T="y",R="z") +
+  geom_polygon(alpha = 0.75, size = 0.5, color = 'black') +
+  geom_text(data = USDA.LAB,
+            aes(label = Label, angle = Angle),
+            color = 'black',
+            size = 3.5) +
+  theme_rgbw() +
+  theme_showsecondary() +
+  theme_showarrows() +
+  custom_percent("Percent") +
+  theme(axis.tern.padding    = unit(0.15, 'npc')) +
+  labs(title = 'USDA Textural Classification Chart',
+       fill  = 'Textural Class',
+       color = 'Textural Class')
+       
+svgPanZoom(gTern)
+```
