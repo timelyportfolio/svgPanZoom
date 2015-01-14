@@ -182,10 +182,11 @@ svgPanZoom(
 )
 
 library(quantmod)
-getSymbols("JPM")
+getSymbols("JPM", from = "2013-12-31")
 svgPanZoom(
   svgPlot(
-    chartSeries(JPM, them = chartTheme('white'))
+    chartSeries(JPM, theme = chartTheme('white'),
+        multi.col=T,TA="addVo();addBBands();addCCI()")
     ,height = 7
     ,width = 12
   )
