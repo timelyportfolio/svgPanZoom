@@ -161,3 +161,33 @@ gTern <- ggplot(data = USDA, aes(y=Clay, x=Sand, z=Silt,
        
 svgPanZoom(gTern)
 ```
+
+
+The true test for me though will be financial time series plots.  Will `svgPanZoom` pass the test?
+
+```
+library(svgPanZoom)
+library(SVGAnnotation)
+library(PerformanceAnalytics)
+
+data(edhec)
+
+svgPanZoom(
+  svgPlot(
+    charts.PerformanceSummary(
+      edhec
+      ,main = "Performance of EDHEC Indicies"
+    )
+  )
+)
+
+library(quantmod)
+getSymbols("JPM")
+svgPanZoom(
+  svgPlot(
+    chartSeries(JPM, them = chartTheme('white'))
+    ,height = 7
+    ,width = 12
+  )
+)
+```
