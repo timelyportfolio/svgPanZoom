@@ -192,3 +192,47 @@ svgPanZoom(
   )
 )
 ```
+
+
+Tal Galili's [`dendextend`](https://github.com/talgalili/dendextend) offers another great use case for pan and zoom interaction.  Let's look at one of the examples from the package vignette.
+
+```
+# install.packages("dendextend")
+library(dendextend)
+library(SVGAnnotation)
+library(svgPanZoom)
+
+data(iris) 
+d_iris <- dist(iris[,-5]) # method="man" # is a bit better
+hc_iris <- hclust(d_iris)
+dend_iris <- as.dendrogram(hc_iris)
+iris_species <- rev(levels(iris[,5]))
+dend_iris <- color_branches(dend_iris,k=3, groupLabels=iris_species)
+# have the labels match the real classification of the flowers:
+labels_colors(dend_iris) <-
+   rainbow_hcl(3)[sort_levels_values(
+      as.numeric(iris[,5])[order.dendrogram(dend_iris)]
+   )]
+
+# We'll add the flower type
+labels(dend_iris) <- paste(as.character(iris[,5])[order.dendrogram(dend_iris)],
+                           "(",labels(dend_iris),")", 
+                           sep = "")
+
+dend_iris <- hang.dendrogram(dend_iris,hang_height=0.1)
+
+# reduce the size of the labels:
+dend_iris <- assign_values_to_leaves_nodePar(dend_iris, 0.5, "lab.cex")
+
+par(mar = c(3,3,3,7))
+svgPlot(
+  {
+    plot(dend_iris, 
+         main = "Clustered Iris dataset
+         (the labels give the true flower species)", 
+         horiz =  TRUE,  nodePar = list(cex = .007))
+    legend("topleft", legend = iris_species, fill = rainbow_hcl(3))
+  }
+  , height = 12, width = 14
+) %>% svgPanZoom
+```
