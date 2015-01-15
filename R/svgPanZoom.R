@@ -36,7 +36,7 @@
 #' @import htmlwidgets
 #'
 #' @export
-svgPanZoom <- function(svg, ... , width = NULL, height = NULL) {
+svgPanZoom <- function(svg, ... , width = NULL, height = NULL, elementId = NULL) {
 
   # check to see if trellis for lattice or ggplot
   if(inherits(svg,c("trellis","ggplot","ggmultiplot"))){
@@ -85,7 +85,8 @@ svgPanZoom <- function(svg, ... , width = NULL, height = NULL) {
     x,
     width = width,
     height = height,
-    package = 'svgPanZoom'
+    package = 'svgPanZoom',
+    elementId = elementId
   )
 }
 
