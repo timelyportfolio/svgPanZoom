@@ -3,7 +3,7 @@
 \alias{svgPanZoom}
 \title{Pan and Zoom R graphics}
 \usage{
-svgPanZoom(svg, ..., width = NULL, height = NULL)
+svgPanZoom(svg, ..., width = NULL, height = NULL, elementId = NULL)
 }
 \arguments{
 \item{svg}{one of
