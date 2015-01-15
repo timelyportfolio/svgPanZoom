@@ -236,3 +236,43 @@ svgPlot(
   , height = 12, width = 14
 ) %>% svgPanZoom
 ```
+
+For what I consider the ultimate test, will it work with `HiveR`?
+
+```
+# from HiveR documentation ?plotHive 
+library(HiveR)
+library(grid)
+library(SVGAnnotation)
+library(svgPanZoom)
+
+data(HEC)
+svgPanZoom(
+  svgPlot(
+    {
+      data(HEC)
+      currDir = getwd()
+      setwd(system.file("extdata", "Misc", package = "HiveR"))
+      plotHive(HEC, ch = 0.1, bkgnd = "white",
+               axLabs = c("hair\ncolor", "eye\ncolor"),
+               axLab.pos = c(1, 1),
+               axLab.gpar = gpar(fontsize = 14),
+               anNodes = "HECnodes.txt",
+               anNode.gpar = gpar(col = "black"),
+               grInfo = "HECgraphics.txt",
+               arrow = c("more\ncommon", 0.0, 2, 4, 1, -2))
+      
+      grid.text("males", x = 0, y = 2.3, default.units = "native")
+      grid.text("females", x = 0, y = -2.3, default.units = "native")
+      grid.text("Pairing of Eye Color with Hair Color", x = 0, y = 3.75,
+                default.units = "native", gp = gpar(fontsize = 18))
+      grid.text("A test of plotHive annotation options", x = 0, y = 3.25,
+                default.units = "native", gp = gpar(fontsize = 12))
+      grid.text("Images from Wikipedia Commons", x = 0, y = -3.5,
+                default.units = "native", gp = gpar(fontsize = 9))
+      setwd(currDir)
+    }
+  , height = 20
+  , width = 30)
+)
+```
