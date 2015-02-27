@@ -33,6 +33,35 @@
 #' library(ggplot2)
 #' svgPanZoom( ggplot( data.frame(x=1:10,y=1:10), aes(x=x,y=y) ) + geom_line() )
 #'
+#' #Of course as a good htmlwidget should, it works with Shiny also.
+#' library(shiny)
+#' library(SVGAnnotation)
+#' library(svgPanZoom)
+#' library(ggplot2)
+#'
+#' ui <- shinyUI(bootstrapPage(
+#'   svgPanZoomOutput(outputId = "main_plot")
+#' ))
+#'
+#' server = shinyServer(function(input, output) {
+#'   output$main_plot <- renderSvgPanZoom({
+#'     p <- ggplot() +
+#'      geom_point(
+#'        data=data.frame(faithful),aes(x=eruptions,y=waiting)
+#'      ) +
+#'      stat_density2d(
+#'        data=data.frame(faithful)
+#'        ,aes(x=eruptions,y=waiting ,alpha =..level..)
+#'        ,geom="polygon") +
+#'      scale_alpha_continuous(range=c(0.05,0.2))
+#'
+#'      svgPanZoom(p, controlIconsEnabled = T)
+#'   })
+#' })
+#'
+#' runApp(list(ui=ui,server=server))
+#'
+#'
 #' @import htmlwidgets
 #'
 #' @export
