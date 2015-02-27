@@ -25,6 +25,34 @@ svgPanZoom(
 )
 ```
 
+### Use It in Shiny
+
+There are lots more examples below, but real quickly here is how we can use it in Shiny.
+
+```R
+library(shiny)
+library(SVGAnnotation)
+library(svgPanZoom)
+library(ggplot2)
+
+ui <- shinyUI(bootstrapPage(
+  
+  svgPanZoomOutput(outputId = "main_plot")
+  
+))
+
+server = shinyServer(function(input, output) {
+  output$main_plot <- renderSvgPanZoom({
+    p <- ggplot() + geom_point(data=data.frame(faithful),aes(x=eruptions,y=waiting)) + stat_density2d(data=data.frame(faithful),aes(x=eruptions,y=waiting, alpha =..level..),geom="polygon") + scale_alpha_continuous(range=c(0.05,0.2))
+    svgPanZoom(p, controlIconsEnabled = T)
+  })
+})
+  
+runApp(list(ui=ui,server=server))
+```
+
+### Use It With Grid and More
+
 Although `SVGAnnotation` works with `grid` graphics, such as `ggplot2` and `lattice`, we will **need to change the default** `addInfo` to `addInfo = F`.  Before I show an example though, I **highly recommend** using `gridSVG` for `ggplot2` and `lattice`.  For some good reasons, please see [this](http://stattech.wordpress.fos.auckland.ac.nz/2013-4-generating-structured-and-labelled-svg/) from Paul Murrell and Simon Potter.  If you are making big graphics--think maps, multiple graphs, etc.--for **speed stick with `svgPlot`**. Here is a simple example using `ggplot2` with `SVGAnnotation` and `svgPlot`.
 
 ```
