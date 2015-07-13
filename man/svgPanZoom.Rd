@@ -49,11 +49,11 @@ library(svgPanZoom)
 library(ggplot2)
 
 ui <- shinyUI(bootstrapPage(
-svgPanZoomOutput(outputId = "main_plot")
+  svgPanZoomOutput(outputId = "main_plot")
 ))
 
 server = shinyServer(function(input, output) {
-output$main_plot <- renderSvgPanZoom({
+  output$main_plot <- renderSvgPanZoom({
     p <- ggplot() +
      geom_point(
        data=data.frame(faithful),aes(x=eruptions,y=waiting)
