@@ -18,14 +18,15 @@ Description: svgPanZoom is an htmlwidget that provides pan and zoom
     interactivity is provided through the svg-pan-zoom.js library.  Various
     options to the widget can tailor the pan + zoom experience to nearly any
     user desire.
+License: MIT + file LICENSE
 Depends:
     R (>= 3.1.2)
-License: MIT + file LICENSE
-LazyData: true
+Imports:
+    htmlwidgets (>= 0.3.2)
 Suggests:
     gridSVG,
     htmltools,
     knitr,
     SVGAnnotation,
     XML
-VignetteBuilder: knitr
+

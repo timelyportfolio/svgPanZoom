@@ -3,4 +3,3 @@
 export(renderSvgPanZoom)
 export(svgPanZoom)
 export(svgPanZoomOutput)
-import(htmlwidgets)

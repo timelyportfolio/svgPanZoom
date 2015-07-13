@@ -11,10 +11,20 @@
 #'   \item filename or connection of a SVG file
 #' }
 #' @param ... other configuration options for svg-pan-zoom.js.
+#'           See \href{https://github.com/ariutta/svg-pan-zoom#how-to-use}{svg-pan-zoom How To Use}
+#'           for a full description of the options available.  As an example to turn on
+#'           \code{controlIconsEnabled} and turn ,
+#'           do \code{svgPanZoom( ..., controlIconsEnabled = TRUE, panEnabled = FALSE )}.
+#' @param width,height valid CSS unit (like "100%", "400px", "auto") or a number,
+#'           which will be coerced to a string and have "px" appended
+#' @param elementId \code{string} id for the \code{svgPanZoom} container.  Since \code{svgPanZoom}
+#'           does not display its container, this is very unlikely to be anything other than the
+#'           default \code{NULL}.
 #' See \href{How to Use}{https://github.com/ariutta/svg-pan-zoom#how-to-use}.
 #' These should be entered like \code{svgPanZoom( svg, controlIconsEnabled = F )}.
 #'
 #' @examples
+#' \dontrun{
 #' library(svgPanZoom)
 #'
 #' # first let's demonstrate a base plot
@@ -60,9 +70,7 @@
 #' })
 #'
 #' runApp(list(ui=ui,server=server))
-#'
-#'
-#' @import htmlwidgets
+#' }
 #'
 #' @export
 svgPanZoom <- function(svg, ... , width = NULL, height = NULL, elementId = NULL) {
@@ -77,7 +85,7 @@ svgPanZoom <- function(svg, ... , width = NULL, height = NULL, elementId = NULL)
     } else {  #use SVGAnnotation
       if(requireNamespace("SVGAnnotation", quietly = TRUE)){
         warning("for best results with ggplot2 and lattice, please install gridSVG")
-        svg = svgPlot(svg, addInfo = F)
+        svg = SVGAnnotation::svgPlot(svg, addInfo = F)
       } else { # if
         stop(
           "SVGAnnotation or gridSVG required with lattice or trellis objects",
@@ -119,17 +127,27 @@ svgPanZoom <- function(svg, ... , width = NULL, height = NULL, elementId = NULL)
   )
 }
 
-#' Widget output function for use in Shiny
+#' Shiny bindings for svgPanZoom
+#'
+#' @param outputId output variable to read from
+#' @param width,height must be a valid CSS unit (like "100%", "400px", "auto") or a number,
+#'           which will be coerced to a string and have "px" appended
+#' @param expr \code{expression} that generates a svgPanZoom htmlwidget
+#' @param env \code{environment} in which to evaluate \code{expr}
+#' @param quoted \code{logical} is \code{expr} a quoted \code{expression} (with \code{quote()})?
+#'           This is useful if you want to save an \code{expression} in a variable.
+#'
+#' @name svgPanZoom-shiny
 #'
 #' @export
 svgPanZoomOutput <- function(outputId, width = '100%', height = '400px'){
-  shinyWidgetOutput(outputId, 'svgPanZoom', width, height, package = 'svgPanZoom')
+  htmlwidgets::shinyWidgetOutput(outputId, 'svgPanZoom', width, height, package = 'svgPanZoom')
 }
 
-#' Widget render function for use in Shiny
+#' @rdname svgPanZoom-shiny
 #'
 #' @export
 renderSvgPanZoom <- function(expr, env = parent.frame(), quoted = FALSE) {
   if (!quoted) { expr <- substitute(expr) } # force quoted
-  shinyRenderWidget(expr, svgPanZoomOutput, env, quoted = TRUE)
+  htmlwidgets::shinyRenderWidget(expr, svgPanZoomOutput, env, quoted = TRUE)
 }

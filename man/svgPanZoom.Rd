@@ -16,6 +16,17 @@ svgPanZoom(svg, ..., width = NULL, height = NULL, elementId = NULL)
 }}
 
 \item{...}{other configuration options for svg-pan-zoom.js.
+See \href{https://github.com/ariutta/svg-pan-zoom#how-to-use}{svg-pan-zoom How To Use}
+for a full description of the options available.  As an example to turn on
+\code{controlIconsEnabled} and turn ,
+do \code{svgPanZoom( ..., controlIconsEnabled = TRUE, panEnabled = FALSE )}.}
+
+\item{width,height}{valid CSS unit (like "100%", "400px", "auto") or a number,
+which will be coerced to a string and have "px" appended}
+
+\item{elementId}{\code{string} id for the \code{svgPanZoom} container.  Since \code{svgPanZoom}
+          does not display its container, this is very unlikely to be anything other than the
+          default \code{NULL}.
 See \href{How to Use}{https://github.com/ariutta/svg-pan-zoom#how-to-use}.
 These should be entered like \code{svgPanZoom( svg, controlIconsEnabled = F )}.}
 }
@@ -24,6 +35,7 @@ Add panning and zooming to almost any R graphics and
 hopefully and eventually other htmlwidgets.
 }
 \examples{
+\dontrun{
 library(svgPanZoom)
 
 # first let's demonstrate a base plot
@@ -69,5 +81,6 @@ server = shinyServer(function(input, output) {
 })
 
 runApp(list(ui=ui,server=server))
+}
 }
 
