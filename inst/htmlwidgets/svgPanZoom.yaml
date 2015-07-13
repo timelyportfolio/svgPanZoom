@@ -2,4 +2,4 @@ dependencies:
 - name: svg-pan-zoom
   version: 3.1.0
   src: htmlwidgets/lib/svg-pan-zoom
-  script: dist/svg-pan-zoom.js
+  script: dist/svg-pan-zoom.min.js
