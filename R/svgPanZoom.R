@@ -1,7 +1,8 @@
 #' Pan and Zoom R graphics
 #'
-#' Add panning and zooming to almost any R graphics and
-#' hopefully and eventually other htmlwidgets.
+#' Add panning and zooming to almost any R graphics from base graphics,
+#'    lattice, and ggplot2 by using the JavaScript library
+#'     \href{https://github.com/ariutta/svg-pan-zoom}{svg-pan-zoom}.
 #'
 #' @param svg one of
 #' \itemize{
