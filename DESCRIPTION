@@ -21,7 +21,7 @@ Description: This htmlwidget provides pan and zoom
     user desire.
 URL: https://github.com/timelyportfolio/svgPanZoom
 BugReports: https://github.com/timelyportfolio/svgPanZoom/issues
-License: MIT + file LICENSE
+License: MIT | file LICENSE
 Depends:
     R (>= 3.1.2)
 Imports:

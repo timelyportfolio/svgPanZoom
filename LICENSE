@@ -1,4 +1,7 @@
-svgPanZoom uses svg-pan-zoom.js as a component in /inst/htmlwidget/lib/svg-pan-zoom.  svg-pan-zoom.js is released under the BSD license.  A copy is included below, but can also be found online at https://github.com/ariutta/svg-pan-zoom.
+The svgPanZoom package as a whole is distributed under the MIT License (MIT).
+
+
+svgPanZoom uses svg-pan-zoom.js as a component in /inst/htmlwidget/lib/svg-pan-zoom.  svg-pan-zoom.js is released under the BSD license.  A full copy of the license agreement is included below, but can also be found online at https://github.com/ariutta/svg-pan-zoom.
 
 
 svg-pan-zoom.js License
