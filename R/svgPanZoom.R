@@ -81,7 +81,7 @@ svgPanZoom <- function(svg, ... , width = NULL, height = NULL, elementId = NULL)
     # if class is trellis then plot then use grid.export
     # try to use gridSVG if available
     if (requireNamespace("gridSVG", quietly = TRUE)) {
-      show(svg)
+      print(svg)
       svg = gridSVG::grid.export(name=NULL)$svg
     } else {  #use SVGAnnotation
       if(requireNamespace("SVGAnnotation", quietly = TRUE)){

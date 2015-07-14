@@ -1,6 +1,6 @@
 Package: svgPanZoom
-Title: R htmlwidget to add pan and zoom to almost any R graphic
-Version: 0.1
+Title: R htmlwidget to Add Pan and Zoom to Almost any R Graphic
+Version: 0.2.0
 Authors@R: c(
               person(
                 "Anders", "Riutta et. al.", role = c("aut", "cph"),
@@ -13,7 +13,8 @@ Authors@R: c(
                 email = "kent.russell@timelyportfolio.com"
               )
             )
-Description: svgPanZoom is an htmlwidget that provides pan and zoom
+Maintainer: Kent Russell <kent.russell@timelyportfolio.com>
+Description: This htmlwidget provides pan and zoom
     interactivity to R graphics, including base, lattice, and ggplot2.  The
     interactivity is provided through the svg-pan-zoom.js library.  Various
     options to the widget can tailor the pan + zoom experience to nearly any
