@@ -3,9 +3,12 @@ This is a resubmission. In this version I have:
 
 * Converted the DESCRIPTION title to title case - htmlwidget now is Htmlwidget
 
-* Changed to MIT | file License to more clearly identify the MIT license for the package
-    and BSD license for the component JavaScript license using other CRAN approved htmlwidgets
-    as a template for the file LICENSE
+* Changed to MIT + file License to follow MIT template exactly, but I do not know how to handle
+    the BSD license for the component JavaScript svg-pan-zoom.js.  For now, I have included a copy of
+    its license within the inst/htmlwidgets/lib/svg-pan-zoom directory and also
+    included BSD in the Authors section.  I saw in some of the RStudio
+    htmlwidgets more explanation of other licenses but in this case was not a MIT license.  Another 
+    version that does not follow the template is https://github.com/timelyportfolio/svgPanZoom/blob/dbfb21142e83b93b7e7cca9775f1a9c6dec22c6d/LICENSE.
     
 
 
