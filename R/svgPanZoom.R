@@ -16,15 +16,25 @@
 #'           for a full description of the options available.  As an example to turn on
 #'           \code{controlIconsEnabled} and turn ,
 #'           do \code{svgPanZoom( ..., controlIconsEnabled = TRUE, panEnabled = FALSE )}.
-#' @param width,height valid CSS unit (like "100%", "400px", "auto") or a number,
+#' @param width,height valid CSS unit (like "100\%", "400px", "auto") or a number,
 #'           which will be coerced to a string and have "px" appended
 #' @param elementId \code{string} id for the \code{svgPanZoom} container.  Since \code{svgPanZoom}
 #'           does not display its container, this is very unlikely to be anything other than the
 #'           default \code{NULL}.
-#' See \href{How to Use}{https://github.com/ariutta/svg-pan-zoom#how-to-use}.
-#' These should be entered like \code{svgPanZoom( svg, controlIconsEnabled = F )}.
 #'
 #' @examples
+#' #  svgPanZoom tries to be very flexible with its first argument
+#'
+#' #  in this first example use SVG as a character string
+#' #    this is probably the least likely use case
+#' library(svgPanZoom)
+#' svgPanZoom('
+#'    <svg style="height:300px;width:300px;">
+#'      <circle cx="60" cy="60" r="50" style="fill:none;stroke:blue;"/>
+#'    </svg>
+#' ')
+#'
+#'
 #' \dontrun{
 #' library(svgPanZoom)
 #'
