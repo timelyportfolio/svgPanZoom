@@ -4,6 +4,8 @@ warnings_are_errors: true
 env:
   global:
     - NOT_CRAN=true
+    - _R_CHECK_CRAN_INCOMING_=false
+    - _R_CHECK_FORCE_SUGGESTS_=false
 before_install:
 before_install:
   - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
