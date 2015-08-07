@@ -36,6 +36,29 @@ HTMLWidgets.widget({
     makeResponsive(el);
 
     instance.zoomWidget = svgPanZoom(svg, x.config);
+
+    // add back viewBox that svgPanZoom removes to fill the container
+    svg.setAttribute(
+      'viewBox',
+      ['0','0',svg.getClientRects()[0].width,svg.getClientRects()[0].height].join(' ')
+    )
+
+    // set up a container for tasks to perform after completion
+    //  one example would be add callbacks for event handling
+    //  styling
+    if (!(typeof x.tasks === "undefined") ){
+      if ( (typeof x.tasks.length === "undefined") ||
+       (typeof x.tasks === "function" ) ) {
+         // handle a function not enclosed in array
+         // should be able to remove once using jsonlite
+         x.tasks = [x.tasks];
+      }
+      x.tasks.map(function(t){
+        // for each tasks call the task with el supplied as `this`
+        t.call({el:el,zoomWidget:instance.zoomWidget});
+      });
+    }
+
     //  use expando property so we can access later
     //    somewhere saw where expando can cause memory leak in IE
     //    could also set in HTMLWidgets.widgets[x] where matches el
