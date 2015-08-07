@@ -1,6 +1,6 @@
 Package: svgPanZoom
 Title: R 'Htmlwidget' to Add Pan and Zoom to Almost any R Graphic
-Version: 0.2.0
+Version: 0.3.0
 Authors@R: c(
               person(
                 "Anders", "Riutta et. al.", role = c("aut", "cph"),
