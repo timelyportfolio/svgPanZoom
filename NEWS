@@ -1,3 +1,10 @@
+svgPanZoom 0.3
+------------------------------------------------------------------------
+
+* Upgrade to svg-pan-zoom.js v3.2.3
+* Internally add better sizing to fit the htmlwidget container
+* Add the ability to incorporate tasks on the JavaScript side
+
 svgPanZoom 0.2
 ------------------------------------------------------------------------
 
