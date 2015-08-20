@@ -8,6 +8,11 @@ Authors@R: c(
                 https://github.com/ariutta/svg-pan-zoom"
               ),
               person(
+                "Jorik", "Tangelder", role = c("aut", "cph"),
+                comment = "hammer.js MIT-licensed touch library in htmlwidgets/lib,
+                https://github.com/hammerjs/hammer"
+              ),
+              person(
                 "Kent", "Russell", role = c("aut", "cre"),
                 comment = "R interface to svg-pan-zoom.js",
                 email = "kent.russell@timelyportfolio.com"
