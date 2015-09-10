@@ -18,22 +18,8 @@ HTMLWidgets.widget({
     //  and add to the htmlwidgets container el
     el.innerHTML = x.svg;
 
-    var svg = el.getElementsByTagName("svg")[0]
-
-    // use this to sort of make our diagram responsive
-    //  or at a minimum fit within the bounds set by htmlwidgets
-    //  for the parent container
-    function makeResponsive(el){
-       var svg = el.getElementsByTagName("svg")[0];
-       if(svg){
-        if(svg.width) {svg.removeAttribute("width")};
-        if(svg.height) {svg.removeAttribute("height")};
-        svg.style.width = "100%";
-        svg.style.height = "100%";
-       }
-    };
-
-    makeResponsive(el);
+    var svg = el.getElementsByTagName("svg")[0];
+    var viewbox = svg.getAttribute("viewBox");
 
     // add touch with hammer.js
     //  using code from example
@@ -81,17 +67,48 @@ HTMLWidgets.widget({
         options.svgElement.addEventListener('touchmove', function(e){ e.preventDefault(); });
       }
     , destroy: function(){
-        this.hammer.destroy()
+        this.hammer.destroy();
       }
     }
 
     instance.zoomWidget = svgPanZoom(svg, x.config);
 
     // add back viewBox that svgPanZoom removes to fill the container
-    svg.setAttribute(
-      'viewBox',
-      ['0','0',svg.getClientRects()[0].width,svg.getClientRects()[0].height].join(' ')
-    )
+    //  if viewbox previously defined take max of prior and bounding rect
+    if(viewbox){
+      viewbox_array = viewbox.split(/[\s,\,]/)
+      viewbox = [
+        viewbox_array[0],
+        viewbox_array[1],
+        Math.max(viewbox_array[2],svg.getBoundingClientRect().width),
+        Math.max(viewbox_array[3],svg.getBoundingClientRect().height)
+      ].join(" ")
+      svg.setAttribute('viewBox', viewbox);
+    } else {
+      svg.setAttribute(
+        'viewBox',
+        ['0','0',
+        svg.getBoundingClientRect().width,
+        svg.getBoundingClientRect().height
+        ].join(' ')
+      )
+    }
+
+    // use this to sort of make our diagram responsive
+    //  or at a minimum fit within the bounds set by htmlwidgets
+    //  for the parent container
+    function makeResponsive(el){
+       var svg = el.getElementsByTagName("svg")[0];
+       if(svg){
+        if(svg.width) {svg.removeAttribute("width")};
+        if(svg.height) {svg.removeAttribute("height")};
+        svg.style.width = "100%";
+        svg.style.height = "100%";
+       }
+    };
+
+    makeResponsive(el);
+
 
     // set up a container for tasks to perform after completion
     //  one example would be add callbacks for event handling
