@@ -18,7 +18,8 @@ HTMLWidgets.widget({
     //  and add to the htmlwidgets container el
     el.innerHTML = x.svg;
 
-    var svg = el.getElementsByTagName("svg")[0]
+    var svg = el.getElementsByTagName("svg")[0];
+    var viewbox = svg.getAttribute("viewBox");
 
     // use this to sort of make our diagram responsive
     //  or at a minimum fit within the bounds set by htmlwidgets
@@ -81,17 +82,32 @@ HTMLWidgets.widget({
         options.svgElement.addEventListener('touchmove', function(e){ e.preventDefault(); });
       }
     , destroy: function(){
-        this.hammer.destroy()
+        this.hammer.destroy();
       }
     }
 
     instance.zoomWidget = svgPanZoom(svg, x.config);
 
     // add back viewBox that svgPanZoom removes to fill the container
-    svg.setAttribute(
-      'viewBox',
-      ['0','0',svg.getClientRects()[0].width,svg.getClientRects()[0].height].join(' ')
-    )
+    //  if viewbox previously defined take max of prior and bounding rect
+    if(viewbox){
+      viewbox_array = viewbox.split(/[\s,\,]/)
+      viewbox = [
+        viewbox[0],
+        viewbox[1],
+        Math.max(viewbox[2],svg.getBoundingClientRect().width),
+        Math.max(viewbox[3],svg.getBoundingClientRect().height)
+      ].join(" ")
+      svg.setAttribute('viewBox', viewbox);
+    } else {
+      svg.setAttribute(
+        'viewBox',
+        ['0','0',
+        svg.getBoundingClientRect().width,
+        svg.getBoundingClientRect().height
+        ].join(' ')
+      )
+    }
 
     // set up a container for tasks to perform after completion
     //  one example would be add callbacks for event handling
