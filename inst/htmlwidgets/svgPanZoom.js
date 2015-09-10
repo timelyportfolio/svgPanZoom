@@ -21,21 +21,6 @@ HTMLWidgets.widget({
     var svg = el.getElementsByTagName("svg")[0];
     var viewbox = svg.getAttribute("viewBox");
 
-    // use this to sort of make our diagram responsive
-    //  or at a minimum fit within the bounds set by htmlwidgets
-    //  for the parent container
-    function makeResponsive(el){
-       var svg = el.getElementsByTagName("svg")[0];
-       if(svg){
-        if(svg.width) {svg.removeAttribute("width")};
-        if(svg.height) {svg.removeAttribute("height")};
-        svg.style.width = "100%";
-        svg.style.height = "100%";
-       }
-    };
-
-    makeResponsive(el);
-
     // add touch with hammer.js
     //  using code from example
     //  https://github.com/ariutta/svg-pan-zoom/blob/master/demo/mobile.html
@@ -93,10 +78,10 @@ HTMLWidgets.widget({
     if(viewbox){
       viewbox_array = viewbox.split(/[\s,\,]/)
       viewbox = [
-        viewbox[0],
-        viewbox[1],
-        Math.max(viewbox[2],svg.getBoundingClientRect().width),
-        Math.max(viewbox[3],svg.getBoundingClientRect().height)
+        viewbox_array[0],
+        viewbox_array[1],
+        Math.max(viewbox_array[2],svg.getBoundingClientRect().width),
+        Math.max(viewbox_array[3],svg.getBoundingClientRect().height)
       ].join(" ")
       svg.setAttribute('viewBox', viewbox);
     } else {
@@ -108,6 +93,22 @@ HTMLWidgets.widget({
         ].join(' ')
       )
     }
+
+    // use this to sort of make our diagram responsive
+    //  or at a minimum fit within the bounds set by htmlwidgets
+    //  for the parent container
+    function makeResponsive(el){
+       var svg = el.getElementsByTagName("svg")[0];
+       if(svg){
+        if(svg.width) {svg.removeAttribute("width")};
+        if(svg.height) {svg.removeAttribute("height")};
+        svg.style.width = "100%";
+        svg.style.height = "100%";
+       }
+    };
+
+    makeResponsive(el);
+
 
     // set up a container for tasks to perform after completion
     //  one example would be add callbacks for event handling
