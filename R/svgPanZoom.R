@@ -6,7 +6,7 @@
 #'
 #' @param svg one of
 #' \itemize{
-#'   \item svg - SVG as XML, such as return from \code{\link[SVGAnnotation]{svgPlot}}
+#'   \item svg - SVG as XML or xml2, such as return from \code{\link[SVGAnnotation]{svgPlot}}
 #'   \item lattice plot - trellis object, such as \code{l} in \code{l=xyplot(...)}
 #'   \item ggplot2 plot - ggplot object, such as \code{g} in \code{g=ggplot(...) + geom_line()}
 #'   \item filename or connection of a SVG file
@@ -110,6 +110,11 @@ svgPanZoom <- function(svg, ... , width = NULL, height = NULL, elementId = NULL)
   if(inherits(svg,c("XMLAbstractDocument","XMLAbstractNode"))){
     # should we add check for svg element?
     svg = XML::saveXML(svg)
+  }
+
+  # check for "xml_document" from xml2
+  if(inherits(svg,c("xml_document","xml_node"))){
+    svg = as.character(svg)
   }
 
   # use SVG file if provided
