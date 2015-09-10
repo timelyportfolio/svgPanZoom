@@ -9,7 +9,7 @@ svgPanZoom(svg, ..., width = NULL, height = NULL, elementId = NULL)
 \arguments{
 \item{svg}{one of
 \itemize{
-  \item svg - SVG as XML, such as return from \code{\link[SVGAnnotation]{svgPlot}}
+  \item svg - SVG as XML or xml2, such as return from \code{\link[SVGAnnotation]{svgPlot}}
   \item lattice plot - trellis object, such as \code{l} in \code{l=xyplot(...)}
   \item ggplot2 plot - ggplot object, such as \code{g} in \code{g=ggplot(...) + geom_line()}
   \item filename or connection of a SVG file

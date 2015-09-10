@@ -36,4 +36,5 @@ Suggests:
     htmltools,
     knitr,
     SVGAnnotation,
-    XML
+    XML,
+    xml2
