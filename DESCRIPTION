@@ -38,3 +38,5 @@ Suggests:
     SVGAnnotation,
     XML,
     xml2
+Additional_repositories: http://www.omeghat.org/
+
