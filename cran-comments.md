@@ -1,5 +1,5 @@
 ## Resubmission note
-* added Additional_repositories as suggested for SVGAnnotation
+* added /R to http://www.omegahat.org/R/ in Additional_repositories
 
 ## Test environments
 
