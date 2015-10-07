@@ -11,6 +11,9 @@
 #'   \item ggplot2 plot - ggplot object, such as \code{g} in \code{g=ggplot(...) + geom_line()}
 #'   \item filename or connection of a SVG file
 #' }
+#' @param viewBox \code{logical} to add back the viewBox to the SVG.
+#'           The default is \code{TRUE} to fit the svgPanZoom in its
+#'           container.
 #' @param ... other configuration options for svg-pan-zoom.js.
 #'           See \href{https://github.com/ariutta/svg-pan-zoom#how-to-use}{svg-pan-zoom How To Use}
 #'           for a full description of the options available.  As an example to turn on
@@ -84,7 +87,7 @@
 #' }
 #'
 #' @export
-svgPanZoom <- function(svg, ... , width = NULL, height = NULL, elementId = NULL) {
+svgPanZoom <- function(svg, viewBox = TRUE, ... , width = NULL, height = NULL, elementId = NULL) {
 
   # check to see if trellis for lattice or ggplot
   if(inherits(svg,c("trellis","ggplot","ggmultiplot"))){
@@ -130,6 +133,9 @@ svgPanZoom <- function(svg, ... , width = NULL, height = NULL, elementId = NULL)
   x = list(
     svg = svg
     ,config = list(...)
+    ,options = list(
+      viewBox = viewBox
+    )
   )
 
   # create widget

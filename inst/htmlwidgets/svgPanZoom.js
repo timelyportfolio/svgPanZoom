@@ -74,24 +74,28 @@ HTMLWidgets.widget({
     instance.zoomWidget = svgPanZoom(svg, x.config);
 
     // add back viewBox that svgPanZoom removes to fill the container
-    //  if viewbox previously defined take max of prior and bounding rect
-    if(viewbox){
-      viewbox_array = viewbox.split(/[\s,\,]/)
-      viewbox = [
-        viewbox_array[0],
-        viewbox_array[1],
-        Math.max(viewbox_array[2],svg.getBoundingClientRect().width),
-        Math.max(viewbox_array[3],svg.getBoundingClientRect().height)
-      ].join(" ")
-      svg.setAttribute('viewBox', viewbox);
-    } else {
-      svg.setAttribute(
-        'viewBox',
-        ['0','0',
-        svg.getBoundingClientRect().width,
-        svg.getBoundingClientRect().height
-        ].join(' ')
-      )
+    //  make it an argument on the R side in case
+    //  we want to disable
+    if(x.options.viewBox){
+      //  if viewbox previously defined take max of prior and bounding rect
+      if(viewbox){
+        viewbox_array = viewbox.split(/[\s,\,]/)
+        viewbox = [
+          viewbox_array[0],
+          viewbox_array[1],
+          Math.max(viewbox_array[2],svg.getBoundingClientRect().width),
+          Math.max(viewbox_array[3],svg.getBoundingClientRect().height)
+        ].join(" ")
+        svg.setAttribute('viewBox', viewbox);
+      } else {
+        svg.setAttribute(
+          'viewBox',
+          ['0','0',
+          svg.getBoundingClientRect().width,
+          svg.getBoundingClientRect().height
+          ].join(' ')
+        )
+      }
     }
 
     // use this to sort of make our diagram responsive
@@ -109,7 +113,10 @@ HTMLWidgets.widget({
 
     makeResponsive(el);
 
-
+    if(!x.options.viewBox){
+      instance.zoomWidget.destroy();
+      instance.zoomWidget = svgPanZoom(svg, x.config);
+    }
     // set up a container for tasks to perform after completion
     //  one example would be add callbacks for event handling
     //  styling
