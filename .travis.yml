@@ -12,5 +12,4 @@ before_install:
   - chmod 755 ./travis-tool.sh
   - echo "options(repos = c(CRAN='http://cran.rstudio.com'))" > ~/.Rprofile
 install:
-  - ./travis-tool.sh install_github duncantl/SVGAnnotation
   - ./travis-tool.sh install_github ramnathv/htmlwidgets

@@ -6,7 +6,7 @@
 #'
 #' @param svg one of
 #' \itemize{
-#'   \item svg - SVG as XML or xml2, such as return from \code{\link[SVGAnnotation]{svgPlot}}
+#'   \item svg - SVG as XML or xml2, such as return from \code{\link[svglite]{xmlSVG}}
 #'   \item lattice plot - trellis object, such as \code{l} in \code{l=xyplot(...)}
 #'   \item ggplot2 plot - ggplot object, such as \code{g} in \code{g=ggplot(...) + geom_line()}
 #'   \item filename or connection of a SVG file
@@ -103,7 +103,7 @@ svgPanZoom <- function(svg, viewBox = TRUE, ... , width = NULL, height = NULL, e
         svg = svglite:::inlineSVG(svg)
       } else { # if
         stop(
-          "SVGAnnotation or gridSVG required with lattice or trellis objects",
+          "svglite or gridSVG required with lattice or trellis objects",
            call. = FALSE
         )
       }

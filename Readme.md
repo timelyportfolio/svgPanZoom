@@ -213,7 +213,7 @@ Tal Galili's [`dendextend`](https://github.com/talgalili/dendextend) offers anot
 ```
 # install.packages("dendextend")
 library(dendextend)
-library(SVGAnnotation)
+library(svglite)
 library(svgPanZoom)
 
 data(iris) 
@@ -239,7 +239,7 @@ dend_iris <- hang.dendrogram(dend_iris,hang_height=0.1)
 dend_iris <- assign_values_to_leaves_nodePar(dend_iris, 0.5, "lab.cex")
 
 par(mar = c(3,3,3,7))
-svgPlot(
+svglite:::inlineSVG(
   {
     plot(dend_iris, 
          main = "Clustered Iris dataset
@@ -257,12 +257,12 @@ For what I consider the ultimate test, will it work with `HiveR`?
 # from HiveR documentation ?plotHive 
 library(HiveR)
 library(grid)
-library(SVGAnnotation)
+library(svglite)
 library(svgPanZoom)
 
 data(HEC)
 svgPanZoom(
-  svgPlot(
+  svglite:::inlineSVG(
     {
       data(HEC)
       currDir = getwd()
