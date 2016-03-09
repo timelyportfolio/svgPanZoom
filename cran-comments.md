@@ -1,6 +1,3 @@
-## Resubmission note
-* added /R to http://www.omegahat.org/R/ in Additional_repositories
-
 ## Test environments
 
 * local Windows install, R 3.2.2
