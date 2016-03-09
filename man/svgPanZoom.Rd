@@ -55,12 +55,12 @@ svgPanZoom('
 library(svgPanZoom)
 
 # first let's demonstrate a base plot
-# use xmlSVG for now
+# use svglite for now
 library(svglite)
 library(lattice)
-svgPanZoom( xmlSVG( plot(1:10) ) )
+svgPanZoom( svglite:::inlineSVG( plot(1:10) ) )
 
-svgPanZoom(xmlSVG(show( xyplot( y~x, data.frame(x=1:10,y=1:10) ) )))
+svgPanZoom(svglite:::inlineSVG(show( xyplot( y~x, data.frame(x=1:10,y=1:10) ) )))
 
 # the package gridSVG is highly recommended for lattice and ggplot2
 # second let's demonstrate a lattice plot

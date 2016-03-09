@@ -17,10 +17,9 @@ As stated in the introduction `svgPanZoom` works with almost all `R` graphics ty
 ```
 library(svgPanZoom) # see install step above
 library(svglite)
-library(xml2)
 
 svgPanZoom(
-  xmlSVG(
+  svglite:::inlineSVG(
     plot(1:10)
   )
 )
@@ -33,7 +32,6 @@ There are lots more examples below, but real quickly here is how we can use it i
 ```R
 library(shiny)
 library(svglite)
-library(xml2)
 library(svgPanZoom)
 library(ggplot2)
 
@@ -55,16 +53,15 @@ runApp(list(ui=ui,server=server))
 
 ### Use It With Grid and More
 
-`svglite` also works with `grid` graphics, such as `ggplot2` and `lattice`.  Before I show an example though, I **highly recommend** using `gridSVG` for `ggplot2` and `lattice`.  For some good reasons, please see [this](http://stattech.wordpress.fos.auckland.ac.nz/2013-4-generating-structured-and-labelled-svg/) from Paul Murrell and Simon Potter.  If you are making big graphics--think maps, multiple graphs, etc.--for **speed stick with `svglite`**. Here is a simple example using `ggplot2` with `svglite` and `xmlSVG`.
+`svglite` also works with `grid` graphics, such as `ggplot2` and `lattice`.  Before I show an example though, I **highly recommend** using `gridSVG` for `ggplot2` and `lattice`.  For some good reasons, please see [this](http://stattech.wordpress.fos.auckland.ac.nz/2013-4-generating-structured-and-labelled-svg/) from Paul Murrell and Simon Potter.  If you are making big graphics--think maps, multiple graphs, etc.--for **speed stick with `svglite`**. Here is a simple example using `ggplot2` with `svglite` and `svglite:::inlineSVG`.
 
 ```
 library(svgPanZoom)
 library(svglite)
-library(xml2)
 library(ggplot2)
 
 svgPanZoom(
-  xmlSVG(
+  svglite:::inlineSVG(
     #will put on separate line but also need show
     show(
       ggplot(data.frame(x=1:10,y=1:10),aes(x=x,y=y)) + geom_line()
@@ -89,7 +86,6 @@ As promised, `lattice` (yes, I still use it and like it) works just as nicely.
 ```
 library(svgPanZoom)
 library(svglite)
-library(xmlSVG)
 library(lattice)
  
 # with gridSVG
@@ -99,7 +95,7 @@ svgPanZoom(
 
 # with svgPlot
 svgPanZoom(
-  xmlSVG(
+  svglite:::inlineSVG(
     show(xyplot( y~x, data.frame(x=1:10,y=1:10), type = "b" ))
   )
 )
@@ -122,7 +118,7 @@ m
 svgPanZoom( m )
 # if your map is big and hairy do this instead
 svgPanZoom(
-  xmlSVG(
+  svglite:::inlineSVG(
     show(m )
     # will have to manually size the svg device
     , height = 10, width = 16 )
@@ -185,13 +181,12 @@ The true test for me though will be financial time series plots.  Will `svgPanZo
 ```
 library(svgPanZoom)
 library(svglite)
-library(xml2)
 library(PerformanceAnalytics)
 
 data(edhec)
 
 svgPanZoom(
-  xmlSVG(
+  svglite:::inlineSVG(
     charts.PerformanceSummary(
       edhec
       ,main = "Performance of EDHEC Indicies"
@@ -203,7 +198,7 @@ svgPanZoom(
 library(quantmod)
 getSymbols("JPM", from = "2013-12-31")
 svgPanZoom(
-  xmlSVG(
+  svglite:::inlineSVG(
     chartSeries(JPM, theme = chartTheme('white'),
         multi.col=T,TA="addVo();addBBands();addCCI()")
     ,height = 7

@@ -42,12 +42,12 @@
 #' library(svgPanZoom)
 #'
 #' # first let's demonstrate a base plot
-#' # use xmlSVG for now
+#' # use svglite for now
 #' library(svglite)
 #' library(lattice)
-#' svgPanZoom( xmlSVG( plot(1:10) ) )
+#' svgPanZoom( svglite:::inlineSVG( plot(1:10) ) )
 #'
-#' svgPanZoom(xmlSVG(show( xyplot( y~x, data.frame(x=1:10,y=1:10) ) )))
+#' svgPanZoom(svglite:::inlineSVG(show( xyplot( y~x, data.frame(x=1:10,y=1:10) ) )))
 #'
 #' # the package gridSVG is highly recommended for lattice and ggplot2
 #' # second let's demonstrate a lattice plot
@@ -97,10 +97,10 @@ svgPanZoom <- function(svg, viewBox = TRUE, ... , width = NULL, height = NULL, e
     if (requireNamespace("gridSVG", quietly = TRUE)) {
       print(svg)
       svg = gridSVG::grid.export(name=NULL)$svg
-    } else {  #use SVGAnnotation
-      if(requireNamespace("SVGAnnotation", quietly = TRUE)){
+    } else {  #use svglite
+      if(requireNamespace("svglite", quietly = TRUE)){
         warning("for best results with ggplot2 and lattice, please install gridSVG")
-        svg = SVGAnnotation::svgPlot(svg, addInfo = F)
+        svg = svglite:::inlineSVG(svg)
       } else { # if
         stop(
           "SVGAnnotation or gridSVG required with lattice or trellis objects",
