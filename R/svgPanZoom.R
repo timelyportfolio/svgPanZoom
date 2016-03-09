@@ -100,7 +100,7 @@ svgPanZoom <- function(svg, viewBox = TRUE, ... , width = NULL, height = NULL, e
     } else {  #use svglite
       if(requireNamespace("svglite", quietly = TRUE)){
         warning("for best results with ggplot2 and lattice, please install gridSVG")
-        svg = svglite:::inlineSVG(svg)
+        svg = svglite::xmlSVG(svg)
       } else { # if
         stop(
           "svglite or gridSVG required with lattice or trellis objects",
