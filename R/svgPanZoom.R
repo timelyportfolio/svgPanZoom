@@ -42,11 +42,12 @@
 #' library(svgPanZoom)
 #'
 #' # first let's demonstrate a base plot
-#' # use svgPlot for now
-#' library(SVGAnnotation)
-#' svgPanZoom( svgPlot( plot(1:10) ) )
+#' # use xmlSVG for now
+#' library(svglite)
+#' library(lattice)
+#' svgPanZoom( xmlSVG( plot(1:10) ) )
 #'
-#' svgPanZoom( svgPlot(show( xyplot( y~x, data.frame(x=1:10,y=1:10) ) ) )
+#' svgPanZoom(xmlSVG(show( xyplot( y~x, data.frame(x=1:10,y=1:10) ) )))
 #'
 #' # the package gridSVG is highly recommended for lattice and ggplot2
 #' # second let's demonstrate a lattice plot
@@ -59,7 +60,7 @@
 #'
 #' #Of course as a good htmlwidget should, it works with Shiny also.
 #' library(shiny)
-#' library(SVGAnnotation)
+#' library(svglite)
 #' library(svgPanZoom)
 #' library(ggplot2)
 #'

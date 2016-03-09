@@ -12,14 +12,15 @@ devtools::install_github("timelyportfolio/svgPanZoom")
 ```
 
 ### Use It
-As stated in the introduction `svgPanZoom` works with almost all `R` graphics types.  For `base` graphics, we'll need the `SVGAnnotation` package.
+As stated in the introduction `svgPanZoom` works with almost all `R` graphics types.  For `base` graphics, we'll need the `svglite` package.
 
 ```
 library(svgPanZoom) # see install step above
-library(SVGAnnotation)
+library(svglite)
+library(xml2)
 
 svgPanZoom(
-  svgPlot(
+  xmlSVG(
     plot(1:10)
   )
 )
@@ -31,7 +32,8 @@ There are lots more examples below, but real quickly here is how we can use it i
 
 ```R
 library(shiny)
-library(SVGAnnotation)
+library(svglite)
+library(xml2)
 library(svgPanZoom)
 library(ggplot2)
 
@@ -53,22 +55,21 @@ runApp(list(ui=ui,server=server))
 
 ### Use It With Grid and More
 
-Although `SVGAnnotation` works with `grid` graphics, such as `ggplot2` and `lattice`, we will **need to change the default** `addInfo` to `addInfo = F`.  Before I show an example though, I **highly recommend** using `gridSVG` for `ggplot2` and `lattice`.  For some good reasons, please see [this](http://stattech.wordpress.fos.auckland.ac.nz/2013-4-generating-structured-and-labelled-svg/) from Paul Murrell and Simon Potter.  If you are making big graphics--think maps, multiple graphs, etc.--for **speed stick with `svgPlot`**. Here is a simple example using `ggplot2` with `SVGAnnotation` and `svgPlot`.
+`svglite` also works with `grid` graphics, such as `ggplot2` and `lattice`.  Before I show an example though, I **highly recommend** using `gridSVG` for `ggplot2` and `lattice`.  For some good reasons, please see [this](http://stattech.wordpress.fos.auckland.ac.nz/2013-4-generating-structured-and-labelled-svg/) from Paul Murrell and Simon Potter.  If you are making big graphics--think maps, multiple graphs, etc.--for **speed stick with `svglite`**. Here is a simple example using `ggplot2` with `svglite` and `xmlSVG`.
 
 ```
 library(svgPanZoom)
-library(SVGAnnotation)
+library(svglite)
+library(xml2)
 library(ggplot2)
 
 svgPanZoom(
-  svgPlot(
+  xmlSVG(
     #will put on separate line but also need show
     show(
       ggplot(data.frame(x=1:10,y=1:10),aes(x=x,y=y)) + geom_line()
 
     )
-    # this is critical with svgPlot and grid graphics
-    , addInfo = F
   )
 )
 ```
@@ -81,13 +82,14 @@ svgPanZoom(
 )
 ```
 
-You might notice right off that sizing is better handled, but more importantly, the resulting `SVG` is much better structured `XML`.  That small time lag will really start to hurt if you are using `gridSVG` with large or complicated graphics.  So if speed is important, ignore the better structure from `gridSVG` and stick with `svgPlot`.
+You might notice right off that sizing is better handled, but more importantly, the resulting `SVG` is much better structured `XML`.  That small time lag will really start to hurt if you are using `gridSVG` with large or complicated graphics.  So if speed is important, ignore the better structure from `gridSVG` and stick with `svglite`.
 
 As promised, `lattice` (yes, I still use it and like it) works just as nicely.
 
 ```
 library(svgPanZoom)
-library(SVGAnnotation)
+library(svglite)
+library(xmlSVG)
 library(lattice)
  
 # with gridSVG
@@ -97,10 +99,8 @@ svgPanZoom(
 
 # with svgPlot
 svgPanZoom(
-  svgPlot(
+  xmlSVG(
     show(xyplot( y~x, data.frame(x=1:10,y=1:10), type = "b" ))
-    , height = 6
-    , width = 10
   )
 )
 ```
@@ -122,7 +122,7 @@ m
 svgPanZoom( m )
 # if your map is big and hairy do this instead
 svgPanZoom(
-  svgPlot(
+  xmlSVG(
     show(m )
     # will have to manually size the svg device
     , height = 10, width = 16 )
@@ -148,44 +148,33 @@ svgPanZoom(
 If ternary diagrams excite you, let's do this [USDA soil example](http://www.ggtern.com/2014/01/15/usda-textural-soil-classification/) from [`ggtern`](http://www.ggtern.com).
 
 ```
-install.packages("ggtern")
-library(ggtern)
+#install.packages("ggtern")
 
-# Load the required libraries
+# use example from ?ggtern::USDA
 library(ggtern)
 library(plyr)
-library(grid)
- 
-# Load the Data. (Available in ggtern 1.0.3.0 next version)
+#Load the Data.
 data(USDA)
- 
-# Put tile labels at the midpoint of each tile.
-USDA.LAB = ddply(USDA, 'Label', function(df) {
-    apply(df[, 1:3], 2, mean)
-})
- 
-# Tweak
-USDA.LAB$Angle = 0
-USDA.LAB$Angle[which(USDA.LAB$Label == 'Loamy Sand')] = -35
+#Put tile labels at the midpoint of each tile.
+USDA.LAB <- ddply(USDA,"Label",function(df){apply(df[,1:3],2,mean)})
+#Tweak
+USDA.LAB$Angle=0; USDA.LAB$Angle[which(USDA.LAB$Label == "Loamy Sand")] = -35
 
 # Construct the plot.
-gTern <- ggplot(data = USDA, aes(y=Clay, x=Sand, z=Silt,
-                        color = Label,
-                        fill = Label)) +
-  coord_tern(L="x",T="y",R="z") +
-  geom_polygon(alpha = 0.75, size = 0.5, color = 'black') +
-  geom_text(data = USDA.LAB,
-            aes(label = Label, angle = Angle),
-            color = 'black',
-            size = 3.5) +
-  theme_rgbw() +
+gTern <- ggtern(data=USDA,aes(Sand,Clay,Silt,color=Label,fill=Label)) +
+  geom_polygon(alpha=0.75,size=0.5,color="black") +
+  geom_mask() +  
+  geom_text(data=USDA.LAB,aes(label=Label,angle=Angle),color="black",size=3.5) +
+  theme_rgbw() + 
   theme_showsecondary() +
   theme_showarrows() +
-  custom_percent("Percent") +
-  theme(axis.tern.padding    = unit(0.15, 'npc')) +
-  labs(title = 'USDA Textural Classification Chart',
-       fill  = 'Textural Class',
-       color = 'Textural Class')
+  weight_percent() + guides(fill='none') + 
+  theme_legend_position("topleft")
+  labs(
+    title="USDA Textural Classification Chart",
+    fill="Textural Class",color="Textural Class"
+  )
+
        
 svgPanZoom(gTern)
 ```
@@ -195,24 +184,26 @@ The true test for me though will be financial time series plots.  Will `svgPanZo
 
 ```
 library(svgPanZoom)
-library(SVGAnnotation)
+library(svglite)
+library(xml2)
 library(PerformanceAnalytics)
 
 data(edhec)
 
 svgPanZoom(
-  svgPlot(
+  xmlSVG(
     charts.PerformanceSummary(
       edhec
       ,main = "Performance of EDHEC Indicies"
     )
-  )
+  ),
+  controlIconsEnabled = TRUE
 )
 
 library(quantmod)
 getSymbols("JPM", from = "2013-12-31")
 svgPanZoom(
-  svgPlot(
+  xmlSVG(
     chartSeries(JPM, theme = chartTheme('white'),
         multi.col=T,TA="addVo();addBBands();addCCI()")
     ,height = 7
