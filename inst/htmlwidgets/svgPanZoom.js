@@ -102,13 +102,13 @@ HTMLWidgets.widget({
     //  or at a minimum fit within the bounds set by htmlwidgets
     //  for the parent container
     function makeResponsive(el){
-       var svg = el.getElementsByTagName("svg")[0];
-       if(svg){
+      var svg = el.getElementsByTagName("svg")[0];
+      if(svg){
         if(svg.width) {svg.removeAttribute("width")};
         if(svg.height) {svg.removeAttribute("height")};
         svg.style.width = "100%";
         svg.style.height = "100%";
-       }
+      }
     };
 
     makeResponsive(el);
@@ -117,6 +117,19 @@ HTMLWidgets.widget({
       instance.zoomWidget.destroy();
       instance.zoomWidget = svgPanZoom(svg, x.config);
     }
+
+    // svglite css takes precedence
+    //  so style svgPanZoom more specifically
+    //  so the controls show up
+    function styleZoomControls(el){
+      Array.prototype.map.call(
+        document.querySelectorAll("#" + el.id + " .svg-pan-zoom-control > path"),
+        function(d,i){d.style.fill="black"}
+      );
+    };
+
+    styleZoomControls(el);
+
     // set up a container for tasks to perform after completion
     //  one example would be add callbacks for event handling
     //  styling

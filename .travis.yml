@@ -1,15 +1,5 @@
-language: r
-sudo: required
-warnings_are_errors: true
-env:
-  global:
-    - NOT_CRAN=true
-    - _R_CHECK_CRAN_INCOMING_=false
-    - _R_CHECK_FORCE_SUGGESTS_=false
-before_install:
-before_install:
-  - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
-  - chmod 755 ./travis-tool.sh
-  - echo "options(repos = c(CRAN='http://cran.rstudio.com'))" > ~/.Rprofile
-install:
-  - ./travis-tool.sh install_github ramnathv/htmlwidgets
+# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
+
+language: R
+sudo: false
+cache: packages
