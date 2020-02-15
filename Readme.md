@@ -6,11 +6,8 @@
 `svgPanZoom` is a [`htmlwidgets`](http://htmlwidgets.org) wrapper for [`svg-pan-zoom.js`](https://github.com/ariutta/svg-pan-zoom).  `svgPanZoom` gives `R` users an easy way to add panning and zooming to any `R` graphics (base, ggplot2, lattice, and lots more).  It prioritizes ease and simplicity, but does offer some ability to tailor the experience and enhance the interactivity.
 
 ### Install It
-For now (`svgPanZoom` not on CRAN) to get started, you will need to use `devtools::install_github` as shown below.  If you do not have `devtools`, please install with `install.packages("devtools")`.
+To get started, you may choose from CRAN `install.packages("devtools")` or Github `remotes::install_github("timelyportfolio/svgPanZoom")`.  `svgPanZoom` is fairly stable, so CRAN is likely your best choice.
 
-```
-devtools::install_github("timelyportfolio/svgPanZoom")
-```
 
 ### Use It
 As stated in the introduction `svgPanZoom` works with almost all `R` graphics types.  For `base` graphics, we'll need the `svglite` package.

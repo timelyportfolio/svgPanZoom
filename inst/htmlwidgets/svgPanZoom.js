@@ -33,7 +33,7 @@ HTMLWidgets.widget({
           , pannedY = 0
         // Init Hammer
         // Listen only for pointer and touch events
-        this.hammer = Hammer(options.svgElement, {
+        this.hammer = new Hammer(options.svgElement, {
           inputClass: Hammer.SUPPORT_POINTER_EVENTS ? Hammer.PointerEventInput : Hammer.TouchInput
         })
         // Enable pinch

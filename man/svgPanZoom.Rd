@@ -4,8 +4,14 @@
 \alias{svgPanZoom}
 \title{Pan and Zoom R graphics}
 \usage{
-svgPanZoom(svg, viewBox = TRUE, ..., width = NULL, height = NULL,
-  elementId = NULL)
+svgPanZoom(
+  svg,
+  viewBox = TRUE,
+  ...,
+  width = NULL,
+  height = NULL,
+  elementId = NULL
+)
 }
 \arguments{
 \item{svg}{one of
@@ -101,4 +107,3 @@ runApp(list(ui=ui,server=server))
 }
 
 }
-
