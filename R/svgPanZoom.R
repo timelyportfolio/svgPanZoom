@@ -126,7 +126,9 @@ svgPanZoom <- function(svg, viewBox = TRUE, ... , width = NULL, height = NULL, e
   # to use file or connection
   if ( inherits(svg, "connection") || ( class(svg) == "character" && file.exists(svg) ) ){
     # might want to parse to insure validity
-    svg <- readLines(svg, warn = FALSE)
+    #svg <- readLines(svg, warn = FALSE)
+    svg <- paste(readLines(svg),collapse="\n")
+    #svg <- readChar(svg, nchars = file.info(svg)$size)
   }
 
 
